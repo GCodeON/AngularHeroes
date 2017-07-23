@@ -26,13 +26,21 @@ export class HeroService {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   } 
+  
+  getHero(id: number): Promise<Hero> {
+    const url = `${this.heroesUrl}/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json().data as Hero)
+      .catch(this.handleError);
+  }
 
   // getHeroes(): Promise<Hero[]> {
   //     return Promise.resolve(HEROES);
   // }
   
-  getHero(id: number): Promise<Hero> {
-    return this.getHeroes()
-    .then(heroes => heroes.find(hero => hero.id === id));
-  }
+  // getHero(id: number): Promise<Hero> {
+  //   return this.getHeroes()
+  //   .then(heroes => heroes.find(hero => hero.id === id));
+  // }
 }
